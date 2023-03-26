@@ -3,20 +3,19 @@ import logging
 import pendulum
 from feedparser import FeedParserDict
 
-from timevault import TimeVault
 
 logging.basicConfig(level=logging.INFO)
 
 
 class TorrentFeed:
-    def __init__(self, news_feed: FeedParserDict, time_vault: TimeVault):
+    def __init__(self, news_feed: FeedParserDict, delta_datetime: pendulum.datetime):
         self.listings = sorted(
             {
                 ent
                 for ent in news_feed.entries
-                if time_vault.time
+                if delta_datetime
                 and pendulum.parse(ent.published, strict=False)
-                > time_vault.time
+                > delta_datetime
             },
             key=lambda x: x.published_parsed,
         )

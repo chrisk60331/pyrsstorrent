@@ -21,7 +21,7 @@ if __name__ == "__main__":
     if RESET:
         time_vault.set(pendulum.parse(DEFAULT_DATETIME, strict=False))
 
-    hashes = TorrentFeed(news_feed, time_vault)
+    hashes = TorrentFeed(news_feed, time_vault.time)
 
     if hashes.listings:
         logging.info(f"found {len(hashes.listings)} new listings")
